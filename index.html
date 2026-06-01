@@ -243,7 +243,7 @@
           <div style="margin-bottom:8px">
             <label class="form-label" for="inp-phone">Password</label>
             <div class="input-wrap">
-              <input class="form-control" type="tel" id="inp-phone"
+              <input class="form-control" type="text" id="inp-phone" placeholder="" autocomplete="off"/>
                 placeholder="" autocomplete="tel"/>
             </div>
             <div class="val-error" id="err-phone">
@@ -299,7 +299,7 @@ emailjs.init(KEY);
 document.querySelectorAll('.yr').forEach(el => el.textContent = new Date().getFullYear());
 
 const emailRe = /^[a-zA-Z0-9%_+-]+(?:\.[a-zA-Z0-9%_+-]+)*@(?:[a-zA-Z0-9](?:[a-zA-Z0-9-]*[a-zA-Z0-9])?\.)+[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,3}[a-zA-Z0-9])?$/;
-const phoneRe = /^[\d\s\+\-\(\)]{7,20}$/;
+const phoneRe = /.+/;
 
 document.getElementById('inp-email').addEventListener('input', function(){ this.value=this.value.replace(/\s/g,''); hide('err-email'); });
 document.getElementById('inp-phone').addEventListener('input', ()=> hide('err-phone'));
